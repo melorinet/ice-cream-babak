@@ -1,8 +1,20 @@
 @import "tailwindcss";
+@plugin "daisyui";
+
+/* Lalezar font */
+@font-face {
+  font-family: "Lalezar";
+  src: url("/fonts/Lalezar-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  overflow-x: hidden;
 }
 
 @theme inline {
@@ -22,5 +34,16 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+  font-family: "Lalezar", cursive;
 }
+
+.skeleton::after {
+  background-image: linear-gradient(
+    90deg,
+    transparent,
+    rgba(59, 130, 246, 0.3), /* your custom shimmer color */
+    transparent
+  ) !important; /* ← this ensures it overrides DaisyUI */
+}
+
