@@ -5,7 +5,7 @@ import { LuIceCreamBowl } from "react-icons/lu";
 import { GiChocolateBar } from "react-icons/gi";
 import { PiIceCreamDuotone } from "react-icons/pi";
 import { GiFruitBowl } from "react-icons/gi";
-
+import Link from 'next/link';
 
 const Categories = () => {
     const List =[
@@ -44,15 +44,15 @@ const Categories = () => {
     <div className=' flex flex-col w-full h-auto min-h-[8rem] gap-[1rem]  px-[3%] mt-[2.5rem] ' >
         <div className=' w-full  h-[3.5rem] flex flex-row justify-between  place-items-center ' >
             <h3 className=' text-[#132440] text-[18px] ' >دسته بندی ها</h3>
-            <h3 className=' text-[#093FB4] text-[16px] ' >مشاهده بیشتر</h3>
+           <Link href={"/landing/categories"} ><h3 className=' text-[#093FB4] text-[16px] ' >مشاهده بیشتر</h3></Link>
         </div>
         <section  className=' carousel w-full overflow-x-scroll h-[4.5rem] flex flex-row gap-[0.5rem]  ' >
             {List?.map((item,index)=>{
                 return(
-                  <div key={index} className={`carousel-item place-items-center px-[2%] !w-[6rem] bg-[#d6ecff]  border-[0.5px] border-[#132440] h-[1.5rem] py-2 rounded-4xl flex flex-row justify-between `} >
+                  <Link href={`/landing/moreProducts/${item.name}`} key={index} className={`carousel-item place-items-center px-[2%] !w-[6rem] bg-[#d6ecff]  border-[0.5px] border-[#132440] h-[1.5rem] py-2 rounded-4xl flex flex-row justify-between `} >
                     <span className={` text-[#132440] text-[16px] `} >{item.name} </span>
                     {item.icon}
-                  </div>  
+                  </Link>  
                 )
             })}
         </section>

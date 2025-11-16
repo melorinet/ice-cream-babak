@@ -6,8 +6,18 @@ import { LuShoppingBasket } from "react-icons/lu";
 import { motion } from "framer-motion";
 import { IoClose } from "react-icons/io5";
 import { FaChevronRight } from "react-icons/fa6";
+import Link from "next/link";
+import { MdOutlineHome } from "react-icons/md";
+import { RiDiscountPercentLine } from "react-icons/ri";
+import { BiCategory } from "react-icons/bi";
+import { TbBrandSketch } from "react-icons/tb";
+import { MdOutlineSell } from "react-icons/md";
+import { MdOutlineWatchLater } from "react-icons/md";
+import { usePathname } from "next/navigation";
 
 const Header = () => {
+  const pathname= decodeURIComponent(usePathname());
+  const isActive= (path) => pathname === path;
   const submenuRef = useRef(null);
   const [showRightBar, setshowRightBar] = useState(false);
   // 🧠 Close menu on outside click or touch
@@ -59,13 +69,13 @@ const Header = () => {
           size={32}
           className=" active:animate-ping "
         />
-        <section className=" w-[3.5rem] h-[3.5rem] flex place-content-center place-items-center rounded-full border border-[#FFFCFB] bg-[#218eff] ">
+        <Link href={"/landing/myprofile"} className=" w-[3.5rem] h-[3.5rem] flex place-content-center place-items-center rounded-full border border-[#FFFCFB] bg-[#218eff] ">
           <BsPerson
             color="#FFFCFB"
             size={32}
             className=" active:animate-ping "
           />
-        </section>
+        </Link>
       </section>
 
       {showRightBar && (
@@ -95,6 +105,15 @@ const Header = () => {
             </section>
             <span className=" w-[8rem] h-[4rem] place-content-center text-[#093FB4] text-[18px]  pl-5 " >بابک چراغی</span>
           </div>
+          <Link onClick={()=> setshowRightBar(false)} href={"/landing"} className={` flex flex-row w-full gap-2 text-[#093FB4] text-[18px] place-items-start mt-[7%] ${isActive("/landing") ? ` rounded-2xl p-2 bg-[#FFFCFB] `:``} `}  ><MdOutlineHome size={24} color="#093FB4" />خانه</Link>
+          <Link onClick={()=> setshowRightBar(false)} href={"/landing/myprofile"} className={`flex flex-row w-full gap-2 text-[#093FB4] text-[18px] place-items-start mt-[7%] ${isActive(`/landing/myprofile`) ? `rounded-2xl p-2 bg-[#FFFCFB]`:``} `} ><BsPerson size={24} color="#093FB4" />پروفایل من</Link>
+          <Link onClick={()=> setshowRightBar(false)} href={`/landing/moreProducts/${"تخفیف های ویژه"}`} className={` flex flex-row w-full gap-2 text-[#093FB4] text-[18px] place-items-start mt-[7%] ${isActive(`/landing/moreProducts/${"تخفیف های ویژه"}`) ? `rounded-2xl p-2 bg-[#FFFCFB]`:``} `}  ><RiDiscountPercentLine size={24} color="#093FB4" />تخفیف های ویژه</Link>
+          <Link onClick={()=> setshowRightBar(false)} href={"/landing/categories"} className= {`flex flex-row w-full gap-2 text-[#093FB4] text-[18px] place-items-start mt-[7%] ${isActive("/landing/categories") ? `rounded-2xl p-2 bg-[#FFFCFB]`:``} `} ><BiCategory size={24} color="#093FB4" />دسته بندی ها</Link>
+          <Link onClick={()=> setshowRightBar(false)} href={"/landing/brands"} className={`flex flex-row w-full gap-2 text-[#093FB4] text-[18px] place-items-start mt-[7%] ${isActive("/landing/brands") ? ` rounded-2xl p-2 bg-[#FFFCFB] `:``}  `} ><TbBrandSketch size={24} color="#093FB4" />برندها</Link>
+          <Link onClick={()=> setshowRightBar(false)}  href={`/landing/moreProducts/${"پر فروش ترین ها"}`}  className={` flex flex-row w-full gap-2 text-[#093FB4] text-[18px] place-items-start mt-[7%] ${isActive(`/landing/moreProducts/${"پر فروش ترین ها"}`) ? ` rounded-2xl p-2 bg-[#FFFCFB] `:``}  `} ><MdOutlineSell size={24} color="#093FB4" />پرفروش ها</Link>
+          <Link onClick={()=> setshowRightBar(false)} href={`/landing/moreProducts/${"جدیدترین ها"}`} className={` flex flex-row w-full gap-2 text-[#093FB4] text-[18px] place-items-start mt-[7%] ${isActive(`/landing/moreProducts/${"جدیدترین ها"}`) ? ` rounded-2xl p-2 bg-[#FFFCFB] `:``}  `}  ><MdOutlineWatchLater size={24} color="#093FB4" />جدیدترین ها</Link>
+          <Link onClick={()=> setshowRightBar(false)} href={"/landing"} className=" flex flex-row w-full gap-2 text-[#093FB4] text-[18px] place-items-start mt-[7%] " ><LuShoppingBasket size={24} color="#093FB4" />سبد خرید</Link>
+       
         </motion.section>
       )}
     </div>

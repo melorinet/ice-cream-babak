@@ -12,7 +12,7 @@ import BottomNav from "../components/BottomNav";
 
 const page = () => {
   return (
-    <div className="  bg-[#FFFCFB] h-auto min-h-[280vh] flex flex-col  ">
+    <div className="  bg-[#FFFCFB] h-auto min-h-[290vh] flex flex-col  ">
       <Header />
       {/* <Searchbar /> */}
       <Topbanner />
