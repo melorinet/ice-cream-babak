@@ -9,8 +9,42 @@ import { IoExitOutline } from "react-icons/io5";
 import { MdOutlineWhereToVote } from "react-icons/md";
 import { IoLocationOutline } from "react-icons/io5";
 import { LuShoppingBasket } from "react-icons/lu";
+import usetokenStore from "../store/tokenStore";
+import useBasketStore from "../store/basketStore";
+import usephoneNumStore from "../store/phoneNumStore";
+import useuidStore from "../store/uidStore";
+import useUniquIdStore from "../store/uniquIdStore";
+import useuserNameStore from "../store/userNameStore";
+import usebasketIdStore from "../store/basketIdStore";
+import usebasketUserCode from "../store/basketUserCode";
+import useoffIdStore from "../store/offIdStore";
+import Link from "next/link";
+import { useRouter } from 'next/navigation';
 
 const MyProfile = () => {
+  const router=useRouter();
+  const clearStorageToken = usetokenStore((state) => state.resetStorage);
+  const clearStorageBasket = useBasketStore((state) => state.resetStorage);
+  const clearStorageMobile = usephoneNumStore((state) => state.resetStorage);
+  const clearStorageuid = useuidStore((state) => state.resetStorage);
+  const clearStorageUniqId = useUniquIdStore((state) => state.resetStorage);
+  const clearStorageUserName = useuserNameStore((state) => state.resetStorage);
+  const clearoffmoreBasketId= usebasketIdStore((state)=> state.resetStorage);
+const clearBasketUserCode= usebasketUserCode((state)=> state.resetStorageIceCream);
+const clearOffId= useoffIdStore((state)=> state.resetStorageoffId);
+  const token = usetokenStore((state) => state.token);
+    const LogOutCleareAllStorage = () => {
+    clearStorageToken();
+    clearStorageBasket();
+    clearStorageMobile();
+    clearStorageuid();
+    clearStorageUniqId();
+    clearStorageUserName();
+    clearoffmoreBasketId();
+    clearBasketUserCode();
+    clearOffId();
+    router.push("/landing",{ shallow: true });
+  };
   return (
     <div className=" pb-[10rem] w-full h-auto min-h-screen flex flex-col place-items-center bg-[#FFFCFB] ">
       <Header />
@@ -36,17 +70,17 @@ const MyProfile = () => {
                 <span className=" text-[#132440] text-[18px] -mb-1 " >پیگیری سفارشات</span>
                 <FaAngleLeft size={20} color="#77BEF0" className=" absolute left-3 " />
             </div>
-              <div className=" active:bg-blue-200 w-full relative flex flex-row gap-3 place-items-end h-[10%] border-b-[0.5px] py-3 border-b-[#132440]/40 ">  
+              <Link href={"/landing/profileInfo"} className=" active:bg-blue-200 w-full relative flex flex-row gap-3 place-items-end h-[10%] border-b-[0.5px] py-3 border-b-[#132440]/40 ">  
                 <IoLocationOutline size={26} color="#132440" className=" " />
-                <span className=" text-[#132440] text-[18px] -mb-1 " >آدرس های من</span>
+                <span className=" text-[#132440] text-[18px] -mb-1 " > حساب کاربری ،آدرس،ایمیل...</span>
                 <FaAngleLeft size={20} color="#77BEF0" className=" absolute left-3 " />
-            </div>
+            </Link>
               <div className=" active:bg-blue-200 w-full relative flex flex-row gap-3 place-items-end h-[10%] border-b-[0.5px] py-3 border-b-[#132440]/40 ">  
                 <LuShoppingBasket size={26} color="#132440" className=" " />
                 <span className=" text-[#132440] text-[18px] -mb-1 " >سبد خرید</span>
                 <FaAngleLeft size={20} color="#77BEF0" className=" absolute left-3 " />
             </div>
-            <button className=" absolute bottom-1 rounded-b-[40px] flex flex-row-reverse gap-3 text-[18px] text-[#FFFCFB] place-content-center place-items-center self-center bg-[#D71313] w-[97%] active:bg-red-400 rounded-sm h-[3rem] " >
+            <button onClick={()=> LogOutCleareAllStorage()} className=" absolute bottom-1 rounded-b-[40px] flex flex-row-reverse gap-3 text-[18px] text-[#FFFCFB] place-content-center place-items-center self-center bg-[#D71313]/80 w-[97%] active:bg-red-400 rounded-sm h-[3rem] " >
                 خروج<IoExitOutline size={20} />
             </button>
         </section>

@@ -1,10 +1,33 @@
+"use client"
 import React from "react";
 import { FaPlus } from "react-icons/fa6";
 import Link from "next/link";
+import { FaEye } from "react-icons/fa";
+import useBasketStore from "../store/basketStore";
+
 
 const ProductCard = (props) => {
+
+   const addNoRepeatedItem = useBasketStore((state) => state.addNoRepeatedItem);
+    const AddItemToCart=()=>{
+      const product={
+        id:props.id,
+        name:props.name,
+        desc:props.desc,
+        count:1,
+        price:props.price,
+        oldprice:props.oldprice,
+        image:props.src,
+        text:props.text
+      };
+      addNoRepeatedItem(product)
+      }
+
   return (
-    <Link href={`/landing/singleProduct/${props.id}`} className=" carousel-item bg-[url(/meltedCard.png)] bg-cover bg-center w-[11rem] h-[15rem]   rounded-md flex flex-col border-[0.5px] place-items-center border-[#CD2C58] shadow-md shadow-zinc-500 ">
+    <div
+      
+      className=" carousel-item bg-[url(/meltedCard.png)] overflow-hidden bg-cover bg-center w-[11rem] h-[15.4rem] pb-[0.2rem] rounded-md flex flex-col border-[0.5px] place-items-center border-[#CD2C58] shadow-md shadow-zinc-500 "
+    >
       {/* <img src={item.src} alt="ice-cream" className=" w-[6.5rem] h-[6rem] rounded-full overflow-hidden border self-center -mt-7 shadow-sm shadow-zinc-400 " /> */}
       <img
         src={props.src}
@@ -36,10 +59,16 @@ const ProductCard = (props) => {
         </h3>
         <span className=" text-[#132440] text-[12px] ">حاشیه سود</span>
       </div>
-      <button className=" w-full h-[4rem] shadow-2xs shadow-zinc-700 bg-[#D71313] active:bg-red-400 rounded-b-md flex flex-row place-content-center place-items-center gap-3 " >
-            افزودن به سبد خرید<FaPlus color="#FFFCFB" size={14} />
-      </button>
-    </Link>
+      <div className=" w-full h-[2rem] grid grid-cols-2 mt-[3%] px-[3%] gap-2 ">
+        <button onClick={()=>AddItemToCart()} className=" w-full h-full shadow-2xs shadow-zinc-700 text-[#FFFCFB] text-[12px] rounded-md bg-[#D71313]/95 active:bg-red-400 flex flex-col place-content-center place-items-center  ">
+          <FaPlus color="#FFFCFB" size={14} />
+        </button>
+        <Link href={`/landing/singleProduct/${props.id}`} className=" w-full h-full shadow-2xs shadow-zinc-700 bg-[#D71313]/95 active:bg-red-400 rounded-md flex flex-row place-content-center place-items-center gap-3 ">
+          <FaEye color="#FFFCFB" size={14} />
+        </Link>
+      </div>
+     
+    </div>
   );
 };
 

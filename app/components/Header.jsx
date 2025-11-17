@@ -14,6 +14,7 @@ import { TbBrandSketch } from "react-icons/tb";
 import { MdOutlineSell } from "react-icons/md";
 import { MdOutlineWatchLater } from "react-icons/md";
 import { usePathname } from "next/navigation";
+import useBasketStore from "../store/basketStore";
 
 const Header = () => {
   const pathname= decodeURIComponent(usePathname());
@@ -42,6 +43,8 @@ const Header = () => {
       document.removeEventListener("touchstart", handleOutside);
     };
   }, [showRightBar]);
+
+  const items = useBasketStore((state) => state.itemsIceCream);
   return (
     <div className=" w-full fixed flex bg-[url(/melted.png)] bg-right bg-cover bg-no-repeat flex-row h-[5rem] place-content-center place-items-center justify-between px-[3%] bg-[#218eff] rounded-b-lg shadow-md shadow-zinc-700 z-20 border-b border-b-[#D71313]/30 ">
       {showRightBar ? (
@@ -64,14 +67,17 @@ const Header = () => {
         />
       )}
       <section className=" flex flex-row place-content-center place-items-center gap-5 ">
+        <Link href={"/landing/basket"} className=" relative" >
+        <div className=" bg-[#D71313]/80 w-[1.3rem] h-[1.3rem] rounded-full absolute -top-3 -right-3 flex place-content-center place-items-center text-[16px] text-[#FFFCFB] " >{items?.length} </div>
         <LuShoppingBasket
-          color="#FFFCFB"
+          color= {isActive("/landing/basket") ? "#093FB4": "#FFFCFB"}
           size={32}
           className=" active:animate-ping "
         />
+        </Link>
         <Link href={"/landing/myprofile"} className=" w-[3.5rem] h-[3.5rem] flex place-content-center place-items-center rounded-full border border-[#FFFCFB] bg-[#218eff] ">
           <BsPerson
-            color="#FFFCFB"
+            color={isActive("/landing/myprofile") ? "#093FB4":"#FFFCFB"} 
             size={32}
             className=" active:animate-ping "
           />

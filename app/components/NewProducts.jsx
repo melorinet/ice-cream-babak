@@ -9,36 +9,54 @@ const NewProducts = () => {
       src: "/ice-cream.png",
       name: "بستنی عروسکی ",
       price: "120000",
+        oldprice:"130000",
+      text:"pretext mahsul",
+      desc:"توضیحات محصول"
     },
     {
       id: 2,
       src: "/ice-cream.png",
       name: "بستنی شکلاتی",
       price: "120000",
+        oldprice:"130000",
+      text:"pretext mahsul",
+      desc:"توضیحات محصول"
     },
     {
       id: 3,
       src: "/ice-cream.png",
       name: "بستنی میوه ای",
       price: "150000",
+        oldprice:"130000",
+      text:"pretext mahsul",
+      desc:"توضیحات محصول"
     },
     {
       id: 4,
       src: "/ice-cream.png",
       name: "بستنی وانیلی",
       price: "180000",
+        oldprice:"130000",
+      text:"pretext mahsul",
+      desc:"توضیحات محصول"
     },
     {
       id: 5,
       src: "/ice-cream.png",
       name: "بستنی شکلات کارامل",
       price: "130000",
+        oldprice:"130000",
+      text:"pretext mahsul",
+      desc:"توضیحات محصول"
     },
     {
       id: 6,
       src: "/ice-cream.png",
       name: "بستنی دبی چاکلت",
       price: "160000",
+        oldprice:"130000",
+      text:"pretext mahsul",
+      desc:"توضیحات محصول"
     },
   ];
   return (
@@ -53,7 +71,8 @@ const NewProducts = () => {
         {NewProductsList?.map((item,index)=>{
           const tomanPrice = new Intl.NumberFormat('fa-IR').format(item.price); 
           return(
-            <ProductCard id={item.id} key={index} src={item.src} tomanPrice={tomanPrice} name={item.name} />
+           <ProductCard id={item.id} key={index} src={item.src} tomanPrice={tomanPrice} name={item.name} price={item.price} oldprice={item.oldprice} desc={item.desc} text={item.text} />
+
           )
         })
 
