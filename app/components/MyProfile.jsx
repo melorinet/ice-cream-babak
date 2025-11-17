@@ -43,7 +43,7 @@ const clearOffId= useoffIdStore((state)=> state.resetStorageoffId);
     clearoffmoreBasketId();
     clearBasketUserCode();
     clearOffId();
-    router.push("/landing",{ shallow: true });
+    router.push("/",{ shallow: true });
   };
   return (
     <div className=" pb-[10rem] w-full h-auto min-h-screen flex flex-col place-items-center bg-[#FFFCFB] ">

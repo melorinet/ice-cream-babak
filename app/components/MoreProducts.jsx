@@ -69,7 +69,7 @@ const MoreProducts = (props) => {
         {productsList?.map((item,index)=>{
           const tomanPrice = new Intl.NumberFormat('fa-IR').format(item.price); 
           return(
-           <ProductCard id={item.id} key={index} src={item.src} tomanPrice={tomanPrice} name={item.name} price={item.price} oldprice={oldprice} desc={item.desc} text={item.text} />
+           <ProductCard id={item.id} key={index} src={item.src} tomanPrice={tomanPrice} name={item.name} price={item.price} oldprice={item.oldprice} desc={item.desc} text={item.text} />
           )
         })}
       </section>
