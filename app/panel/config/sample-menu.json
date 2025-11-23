@@ -1,0 +1,37 @@
+[
+{
+"key": "top",
+"name": "بالا",
+"isactive": true
+},
+{
+"key": "left",
+"name": "چپ",
+"isactive": true
+},
+{
+"key": "right",
+"name": "راست",
+"isactive": true
+},
+{
+"key": "bottom",
+"name": "پایین",
+"isactive": true
+},
+{
+"key": "bottomright",
+"name": "پایین راست",
+"isactive": false
+},
+ {
+"key": "bottomleft",
+"name": "پایین چپ",
+"isactive": false
+},
+ {
+"key": "bottomcenter",
+"name": "پایین وسط",
+"isactive": false
+}
+]

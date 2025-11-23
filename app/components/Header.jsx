@@ -15,6 +15,7 @@ import { MdOutlineSell } from "react-icons/md";
 import { MdOutlineWatchLater } from "react-icons/md";
 import { usePathname } from "next/navigation";
 import useBasketStore from "../store/basketStore";
+import { IoMdLogOut } from "react-icons/io";
 
 const Header = () => {
   const pathname= decodeURIComponent(usePathname());
@@ -118,7 +119,9 @@ const Header = () => {
           <Link onClick={()=> setshowRightBar(false)} href={"/landing/brands"} className={`flex flex-row w-full gap-2 text-[#093FB4] text-[18px] place-items-start mt-[7%] ${isActive("/landing/brands") ? ` rounded-2xl p-2 bg-[#FFFCFB] `:``}  `} ><TbBrandSketch size={24} color="#093FB4" />برندها</Link>
           <Link onClick={()=> setshowRightBar(false)}  href={`/landing/moreProducts/${"پر فروش ترین ها"}`}  className={` flex flex-row w-full gap-2 text-[#093FB4] text-[18px] place-items-start mt-[7%] ${isActive(`/landing/moreProducts/${"پر فروش ترین ها"}`) ? ` rounded-2xl p-2 bg-[#FFFCFB] `:``}  `} ><MdOutlineSell size={24} color="#093FB4" />پرفروش ها</Link>
           <Link onClick={()=> setshowRightBar(false)} href={`/landing/moreProducts/${"جدیدترین ها"}`} className={` flex flex-row w-full gap-2 text-[#093FB4] text-[18px] place-items-start mt-[7%] ${isActive(`/landing/moreProducts/${"جدیدترین ها"}`) ? ` rounded-2xl p-2 bg-[#FFFCFB] `:``}  `}  ><MdOutlineWatchLater size={24} color="#093FB4" />جدیدترین ها</Link>
-          <Link onClick={()=> setshowRightBar(false)} href={"/landing"} className=" flex flex-row w-full gap-2 text-[#093FB4] text-[18px] place-items-start mt-[7%] " ><LuShoppingBasket size={24} color="#093FB4" />سبد خرید</Link>
+          <Link onClick={()=> setshowRightBar(false)} href={"/landing/basket"} className={`flex flex-row w-full gap-2 text-[#093FB4] text-[18px] place-items-start mt-[7%] ${isActive(`/landing/basket`) ? ` rounded-2xl p-2 bg-[#FFFCFB] `:``}   `}  ><LuShoppingBasket size={24} color="#093FB4" />سبد خرید</Link>
+          <Link onClick={()=> setshowRightBar(false)} href={"/landing"} className=" flex flex-row w-full gap-2 text-[#093FB4] text-[18px] place-items-start mt-[7%] border-t-[0.5px] border-t-[#132440]/40 py-[1.5rem] " ><IoMdLogOut size={24} color="#093FB4" /> خروج</Link>
+
        
         </motion.section>
       )}

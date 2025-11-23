@@ -1,9 +1,9 @@
 import React from 'react'
-import PickAddress from '../../components/PickAddress'
+import SettingList from '../components/SettingList'
 
 const page = () => {
   return (
-    <PickAddress />
+    <SettingList />
   )
 }
 

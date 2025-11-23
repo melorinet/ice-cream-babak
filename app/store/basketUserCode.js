@@ -10,7 +10,7 @@ const usebasketUserCode = create(persist((set) => ({
   
 
   // Clear all items from the basket
-  clearIceCreamBasketUserCode: () => set({ IceCreamBasketUserCode:"" }),
+  clearIceCreamBasketUserCode: () => set({ IceCreamBasketUserCode:0 }),
 
   // Remove the entire storage item from localStorage
   resetStorageIceCream: () => {

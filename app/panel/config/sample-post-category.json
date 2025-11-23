@@ -1,0 +1,52 @@
+[
+     {
+"key": "menu",
+"name": "منو",
+"isactive": true
+},
+ {
+"key": "blog",
+"name": "وبلاگ",
+"isactive": true
+},
+{
+"key": "post",
+"name": "پست",
+"isactive": true
+},
+ {
+"key": "gallery",
+"name": "گالری",
+"isactive": true
+},
+ {
+"key": "article",
+"name": "مقالات",
+"isactive": true
+},
+{
+"key": "product",
+"name": "محصولات",
+"isactive": true
+},
+ {
+"key": "service",
+"name": "سرویس",
+"isactive": true
+},
+ {
+"key": "team",
+"name": "تیم",
+"isactive": true
+},
+ {
+"key": "banner",
+"name": "بنرها",
+"isactive": true
+},
+ {
+"key": "setting",
+"name": "تنظیمات",
+"isactive": true
+}
+]

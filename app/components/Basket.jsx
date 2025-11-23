@@ -16,6 +16,7 @@ import { useRouter } from "next/navigation";
 import usetokenStore from "../store/tokenStore";
 import Header from "./Header";
 import { FaAnglesLeft } from "react-icons/fa6";
+import Swal from "sweetalert2";
 
 const Basket = (props) => {
   const router = useRouter();
@@ -68,45 +69,118 @@ const Basket = (props) => {
       settotalPrice(lastTotalPrice);
     }
   };
-
+  const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+  const xdomainhash = process.env.NEXT_PUBLIC_XDOMAINHASH;
   const sendBasketToServer = async () => {
+    setloading(true);
     if (token) {
-      setloading(true);
-      const updatedFinalBasketArray = items.map((item) => ({
-        post_id: item.selectedSizeId ? item.selectedSizeId : item.id,
-        total: item.count,
-      }));
-      if (updatedFinalBasketArray.length === 0) {
-        setshowAlert(true);
-        setalertmsg("سبد خرید شما خالی است");
-        setloading(false);
-      } else {
-        await axios
-          .post("https://api.inparde.com/api/fa/addtobasket", {
-            basketid: inpardeBasketId === "" ? null : inpardeBasketId,
-            usercode:
-              offmoreBasketUserCode === 0 ? null : offmoreBasketUserCode,
-            basket_items: updatedFinalBasketArray,
-            discount_id: offId,
-          })
-          .then((res) => {
-            if (!res.data.error) {
-              addBasketId(res.data.data.basket_id);
-              addBasketUserCode(res.data.data.usercode);
+      try {
+        const updatedFinalBasketArray = items.map((item) => ({
+          post_id: item.selectedSizeId ? item.selectedSizeId : item.id,
+          total: item.count,
+        }));
+
+        // console.log(`${BASE_URL}/addtobasket`);
+        // console.log(`basketid:${inpardeBasketId}`);
+        // console.log(`usercode:${offmoreBasketUserCode}`);
+        // console.log(`basket_items:${updatedFinalBasketArray}`);
+        // console.log(`discount_id:${offId}`);
+        // console.log(`xdomainhash:${xdomainhash}`)
+        // console.log(`token:${token}`)
+
+        if (updatedFinalBasketArray.length === 0) {
+          setshowAlert(true);
+          setalertmsg("سبد خرید شما خالی است");
+          setloading(false);
+        } else {
+          const response = await fetch(`${BASE_URL}/api/addtobasket`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+              Authorization: `Bearer ${token}`,
+              "X-Domain-Hash": xdomainhash,
+            },
+            body: JSON.stringify({
+              basketid: inpardeBasketId === "" ? null : inpardeBasketId,
+              usercode:
+                offmoreBasketUserCode === 0 ? null : offmoreBasketUserCode,
+              basket_items: updatedFinalBasketArray,
+              discount_id: offId,
+            }),
+          });
+          if (!response.ok) {
+            const errorData = await response.json();
+            setloading(false);
+            throw new Error(errorData.message || "خطایی رخ داد");
+          } else {
+            const data = await response.json();
+            console.log(data);
+            if (!data.error) {
+              addBasketId(data.data.basket_id);
+              addBasketUserCode(data.data.usercode);
               router.push("/landing/pickAddress");
             } else {
               setshowAlert(true);
-              setalertmsg(res.data.message);
+              setalertmsg(data.message);
             }
             setloading(false);
-          })
-          .catch((err) => console.log(err));
+          }
+        }
+        setloading(false);
+      } catch (error) {
+        console.log(error);
+        Swal.fire({
+          icon: "error",
+          title: error,
+        });
+
+        //   alert(error);
+        setloading(false);
       }
     } else {
       setshowAlert(true);
       setalertmsg("لطفا ابتدا وارد حساب کاربری شوید");
     }
   };
+  // const sendBasketToServer = async () => {
+  //   if (token) {
+  //     setloading(true);
+  //     const updatedFinalBasketArray = items.map((item) => ({
+  //       post_id: item.selectedSizeId ? item.selectedSizeId : item.id,
+  //       total: item.count,
+  //     }));
+  //     if (updatedFinalBasketArray.length === 0) {
+  //       setshowAlert(true);
+  //       setalertmsg("سبد خرید شما خالی است");
+  //       setloading(false);
+  //     } else {
+  //       await axios
+  //         .post("https://api.inparde.com/api/fa/addtobasket", {
+  //           basketid: inpardeBasketId === "" ? null : inpardeBasketId,
+  //           usercode:
+  //             offmoreBasketUserCode === 0 ? null : offmoreBasketUserCode,
+  //           basket_items: updatedFinalBasketArray,
+  //           discount_id: offId,
+  //         })
+  //         .then((res) => {
+  //           if (!res.data.error) {
+  //             addBasketId(res.data.data.basket_id);
+  //             addBasketUserCode(res.data.data.usercode);
+  //             router.push("/landing/pickAddress");
+  //           } else {
+  //             setshowAlert(true);
+  //             setalertmsg(res.data.message);
+  //           }
+  //           setloading(false);
+  //         })
+  //         .catch((err) => console.log(err));
+  //     }
+  //   } else {
+  //     setshowAlert(true);
+  //     setalertmsg("لطفا ابتدا وارد حساب کاربری شوید");
+  //   }
+  // };
   const clearBasket = useBasketStore((state) => state.clearBasket);
   const { resetStorage } = useBasketStore();
   const ResetBasket = () => {
@@ -140,27 +214,65 @@ const Basket = (props) => {
   }, [items]);
 
   const sendOffCodeToServer = async () => {
-    setloading(true);
-    await axios
-      .post("https://api.inparde.com/api/fa/discount", {
-        code: offCode,
-      })
-      .then((res) => {
-        if (!res.data.error) {
-          let mydata = res.data.data;
+    setloading(false);
+    try {
+      const response = await fetch(`${BASE_URL}/api/discount`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "X-Domain-Hash": xdomainhash,
+        },
+        body: JSON.stringify({
+          code: offCode,
+        }),
+      });
+      if (!response.ok) {
+        const errorData = await response.json();
+        setloading(false);
+        throw new Error(errorData.message || "خطایی رخ داد");
+      } else {
+        const data = await response.json();
+        if (!data.error) {
+          let mydata = data.data;
           addoffId(mydata.id);
           CalculateTotalPriceByOff(mydata.percent, mydata.amount);
-        } else {
-          setshowAlert(true);
-          setalertmsg(res.data.message);
         }
         setloading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setloading(false);
+      }
+    } catch (error) {
+      console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: error,
       });
+
+      //   alert(error);
+      setloading(false);
+    }
   };
+  // const sendOffCodeToServer = async () => {
+  //   setloading(true);
+  //   await axios
+  //     .post("https://api.inparde.com/api/fa/discount", {
+  //       code: offCode,
+  //     })
+  //     .then((res) => {
+  //       if (!res.data.error) {
+  //         let mydata = res.data.data;
+  //         addoffId(mydata.id);
+  //         CalculateTotalPriceByOff(mydata.percent, mydata.amount);
+  //       } else {
+  //         setshowAlert(true);
+  //         setalertmsg(res.data.message);
+  //       }
+  //       setloading(false);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //       setloading(false);
+  //     });
+  // };
   function toPersianNumber(num) {
     return num.toString().replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
   }
@@ -269,7 +381,7 @@ const Basket = (props) => {
         <div className=" fixed max-sm:text-[8px] bg-white  grid grid-cols-2 bottom-16 w-[96%] pt-2 text-[18px] place-content-center place-items-center font-bold text-white bgb hover:shadow-2xl  hover:cursor-pointer hover:text-white  active:shadow-2xl ">
           {showAlert ? (
             <section className=" fixed   bg-[rgba(0,0,0,0.5)] bottom-0 right-0 left-0 top-0 w-full h-full z-50 flex-col-reverse justify-between place-items-center place-content-center row-span-4">
-              <div className=" bg-[#FFFCFB] w-[94%] rounded-md h-[14rem] flex flex-col gap-3 place-content-center place-items-center " >
+              <div className=" bg-[#FFFCFB] w-[94%] rounded-md h-[14rem] flex flex-col gap-3 place-content-center place-items-center ">
                 <h1 className=" self-center  text-[#132440] text-[24px] font-light ">
                   {alertmsg}{" "}
                 </h1>

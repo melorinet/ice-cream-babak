@@ -1,0 +1,32 @@
+[
+{
+"key": "topright",
+"name": "بنر بالا راست",
+"isactive": true
+},
+{
+"key": "topleft",
+"name": "بنر بالا چپ",
+"isactive": true
+},
+{
+"key": "top",
+"name": "بنرهای بالا",
+"isactive": true
+},
+{
+"key": "middle",
+"name": "بنرهای وسط",
+"isactive": true
+},
+{
+"key": "brand",
+"name": "برندها",
+"isactive": true
+},
+ {
+"key": "selectedproduct",
+"name": "محصولات انتخابی",
+"isactive": true
+}
+]

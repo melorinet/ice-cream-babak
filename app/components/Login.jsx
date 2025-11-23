@@ -1,6 +1,6 @@
 "use client"
 import Link from 'next/link'
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import Swal from "sweetalert2";
 import Loading from "../components/Loading"
 import useuidStore from "../store/uidStore"
@@ -8,8 +8,12 @@ import usephoneNumStore from "../store/phoneNumStore"
 import useuserNameStore from "../store/userNameStore"
 import usetokenStore from "../store/tokenStore"
 import { useRouter } from 'next/navigation';
+import usebasketUserCode from "../store/basketUserCode"
 
 const Login = () => {
+    const BasketUserCode = usebasketUserCode(
+    (state) => state.IceCreamBasketUserCode
+  );
   const router = useRouter()
     const [phoneNum, setphoneNum] = useState("")
     const [code, setcode] = useState("")
@@ -92,7 +96,7 @@ const Login = () => {
         throw new Error(errorData.message || "خطایی رخ داد");
       } else{
         const data = await response.json();
-        console.log(data)
+        
         if (!data.error) {
     
           Swal.fire({
@@ -173,7 +177,15 @@ const Login = () => {
     }
   }
 
-  
+  useEffect(() => {
+    console.log(BasketUserCode)
+ if(token){
+  setloading(true)
+  router.push("/landing",{shallow:true})
+  setloading(false)
+ }
+
+}, [token])
 
   return (
     <div className=' w-full h-auto min-h-screen bg-[url(/login-bg.webp)] bg-cover bg-center bg-blend-color bg-[#D71313]/60 flex place-content-center place-items-center ' >
