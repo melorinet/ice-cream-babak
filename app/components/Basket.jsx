@@ -305,7 +305,7 @@ const Basket = (props) => {
                   className=" text-[#132440] flex flex-row-reverse w-full overflow-hidden place-content-center place-items-center justify-between px-3 max-sm:px-1 mb-2 bg-[#FFFCFB] border border-[#093FB4]/70 drop-shadow-md drop-shadow-red-300 rounded-md  "
                   key={index}
                 >
-                  <section className=" flex flex-col mr-1 max-sm:pr-3 min-w-[70%] max-w-full py-3.5 place-items-start ">
+                  <section className=" flex flex-col mr-1 max-sm:pr-3 min-w-[70%] max-w-full py-5 place-items-start ">
                     <div className=" flex flex-col max-sm:flex-row-reverse text-right gap-[1rem] w-fit  p-0">
                       <span className=" text-[18px] text-[#132440]  w-full h-fit text-right justify-start self-start ">
                         {item.name}
@@ -332,7 +332,7 @@ const Basket = (props) => {
                         size={24}
                       />
                       {/* Num of items  */}
-                      <div className=" flex flex-row gap-[2.5rem] w-[10rem] col-span-2 text-white rounded-3xl px-8 bg-[#218EFF]/70 border border-[#218EFF]  h-[3rem] place-content-center place-items-center ">
+                      <div className=" flex flex-row gap-[2.5rem] w-[10rem] col-span-2 text-white rounded-3xl px-8 bg-[#218EFF]/70 border border-[#218EFF]  h-[2rem] place-content-center place-items-center ">
                         <div
                           onClick={() => MinusItemCount(index, item.id)}
                           className=" hover:cursor-pointer text-[24px]  "
@@ -340,7 +340,7 @@ const Basket = (props) => {
                           -
                         </div>
                         <span className=" text-[20px]  ">
-                          {toPersianNumber(item.count)}
+                          {toPersianNumber(item.count)}بسته 
                         </span>
                         <div
                           onClick={() => PlusItemCount(index)}
@@ -361,9 +361,12 @@ const Basket = (props) => {
                     height={100}
                     quality={90}
                   ></img>
+                   <h5 className="  absolute bottom-0 right-1 " >هر بسته شامل ۱۲ عدد بستنی است</h5>
                 </li>
+                
               );
             })}
+           
           </ul>
         ) : (
           <p className=" text-[#132440] font-bold text-xl self-center mt-40 ">
