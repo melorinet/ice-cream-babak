@@ -1,5 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { FaCircleChevronRight } from "react-icons/fa6";
+import { FaCircleChevronLeft } from "react-icons/fa6";
 
 const Topbanner = () => {
   const bannerList = [
@@ -8,43 +10,50 @@ const Topbanner = () => {
     { id: 3, img: "/banner3.jpg" },
   ];
   const [current, setCurrent] = useState(0);
-    // Auto-slide every 3 seconds
+ 
+  // Auto-slide every 3 seconds
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrent((prev) => (prev + 1.3) % bannerList.length);
+    const timer = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % bannerList.length);
     }, 3000);
-    return () => clearInterval(interval);
+
+    return () => clearInterval(timer);
   }, [bannerList.length]);
 
+  const goPrev = () => {
+    setCurrent((prev) =>
+      prev === 0 ? bannerList.length - 1 : prev - 1
+    );
+  };
+
+  const goNext = () => {
+    setCurrent((prev) => (prev + 1) % bannerList.length);
+  };
   return (
-    <div className="relative w-full overflow-hidden h-[15rem] rounded-lg mt-[7rem] ">
-      {/* Slider container */}
-      <div className=" flex flex-row gap-3 rounded-lg overflow-x-scroll px-[3%] h-full " 
-     
+   <div className="relative w-full overflow-hidden h-[15rem] bg-green-200 rounded-lg mt-[7rem]">
+      {/* Slider wrapper */}
+      <div
+        className="flex transition-transform duration-700"
+        style={{ transform: `translateX(+${current * 100}%)` }}
       >
-        {bannerList?.map((item, index) => {
-          return <img 
-               style={{
-          transform: `translateX(+${current * 100}%)`,
-          width: `${bannerList.length * 100}%`,
-        }}
-        //    style={{transform: `translateX(+${current * (320 / bannerList.length)}%)`}}
-           key={index} src={item.img} className=" rounded-lg w-[20rem] h-auto object-cover  " ></img>;
-        })}
-      </div>
-      {/* Dots indicator */}
-      <div className="absolute bottom-2 left-0 right-0 flex justify-center space-x-2"
-    
-      >
-        {bannerList.map((_, index) => (
-          <span
+        {bannerList.map((item, index) => (
+          <img
             key={index}
-            className={`h-2 w-2 rounded-full transition-all duration-300 ${
-              current === index ? "bg-pink-500 w-4" : "bg-gray-300"
-            }`}
-          ></span>
+            src={item.img}
+            alt="banner"
+            className="w-full flex-shrink-0"
+          />
         ))}
       </div>
+
+      {/* Buttons */}
+     
+        <FaCircleChevronLeft size={24} color="#FFFCFB"  onClick={goNext}
+        className="absolute left-3 top-1/2 -translate-y-1/2 btn btn-circle"/>
+  
+        <FaCircleChevronRight onClick={goPrev} size={24} color="#FFFCFB"
+        className="absolute right-3 top-1/2 -translate-y-1/2 btn btn-circle" />
+   
     </div>
   );
 };
